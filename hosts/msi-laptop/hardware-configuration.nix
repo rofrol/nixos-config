@@ -8,6 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  # https://nixos.wiki/wiki/Linux_kernel
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -15,6 +16,9 @@
   # https://github.com/spencerjanssen/dotfiles/blob/2ebf0599456bf5237e64d9fda47449af9704fd71/system/magic-sysrq.nix#L4
   # alt+prnt scr+REISUB
   boot.kernel.sysctl."kernel.sysrq" = 1;
+  boot.kernelParams = [
+    "pci=realloc" # https://forums.developer.nvidia.com/t/nvidia-kernel-driver-cannot-bind-to-rtx-3060-laptop-gpu/175990/9
+  ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/a86a408b-2039-4002-bb13-ae15ae3d6d1a";
