@@ -76,10 +76,30 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-  #   firefox
       htop
+      git
+      calibre
+      docker
+      file
+      google-chrome
+      transmission
+      transmission-gtk
+      ubuntu_font_family # nix-env -q shows as ubuntu-font-family
+      neovim
+      vscode
+      efibootmgr
+      gnome.gnome-tweaks # nix-env -q shows as gnome-tweaks
+      nodejs
+      python
+      robo3t
+      redis
+      mesa-demos
+      pkg-config # nix-env -q shows as pkg-config-wrapper
+      glew
+      libGLU # nix-env -q shows as glu
+      xorg.libXi # nix-env -q shows as libXi
+      zlib
+      xorg.libX11 # nix-env -q shows libX11
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
