@@ -84,7 +84,6 @@
       google-chrome
       transmission
       transmission-gtk
-      ubuntu_font_family # nix-env -q shows as ubuntu-font-family
       neovim
       vscode
       efibootmgr
@@ -100,6 +99,11 @@
       xorg.libXi # nix-env -q shows as libXi
       zlib
       xorg.libX11 # nix-env -q shows libX11
+  ];
+
+  # https://nixos.wiki/wiki/Fonts
+  fonts.fonts = with pkgs; [
+    ubuntu_font_family # nix-env -q shows as ubuntu-font-family
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
