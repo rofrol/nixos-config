@@ -12,6 +12,9 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  # https://github.com/spencerjanssen/dotfiles/blob/2ebf0599456bf5237e64d9fda47449af9704fd71/system/magic-sysrq.nix#L4
+  # alt+prnt scr+REISUB
+  boot.kernel.sysctl."kernel.sysrq" = 1;
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/a86a408b-2039-4002-bb13-ae15ae3d6d1a";
@@ -25,5 +28,8 @@
 
   swapDevices = [ ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  # $ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+  # $ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors 
+  # https://askubuntu.com/questions/604720/setting-to-high-performance/1047763#1047763
+  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 }
