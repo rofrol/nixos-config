@@ -4,6 +4,10 @@
 
 { config, pkgs, ... }:
 
+# https://www.reddit.com/r/NixOS/comments/g02tbj/overriding_a_package_checksum_in_configurationnix/
+let
+  gitandgui = pkgs.git.override { guiSupport = true; };
+in 
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -73,11 +77,18 @@
     ];
   };
 
+  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+      # tcl and tk needed for gitk
+      # https://github.com/NixOS/nixpkgs/blob/nixos-21.05/pkgs/applications/version-management/git-and-tools/git/default.nix#L75
+      # https://github.com/NixOS/nixpkgs/issues/7726#issuecomment-100351564
+      tcl
+      tk
+      gitandgui
+      # other
       htop
-      git
       calibre
       docker
       file
@@ -88,11 +99,17 @@
       vscode
       efibootmgr
       gnome.gnome-tweaks # nix-env -q shows as gnome-tweaks
+      mesa-demos
+      powertop
+      gimp
+      inkscape
+      desktop-file-utils # has update-desktop-database https://github.com/tubleronchik/kuka-airapkgs/blob/d3bea431b0a092c67256f0c92e362f641182af8b/pkgs/tools/misc/mimeo/default.nix#L18
+      # development
       nodejs
       python
       robo3t
       redis
-      mesa-demos
+      # nodejs development
       pkg-config # nix-env -q shows as pkg-config-wrapper
       glew
       libGLU # nix-env -q shows as glu
