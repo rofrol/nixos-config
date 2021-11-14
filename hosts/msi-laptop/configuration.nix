@@ -4,10 +4,6 @@
 
 { config, pkgs, ... }:
 
-# https://www.reddit.com/r/NixOS/comments/g02tbj/overriding_a_package_checksum_in_configurationnix/
-let
-  gitandgui = pkgs.git.override { guiSupport = true; };
-in 
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -77,6 +73,7 @@ in
     ];
   };
 
+  nixpkgs.config.allowUnfree = true;
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -86,7 +83,7 @@ in
       # https://github.com/NixOS/nixpkgs/issues/7726#issuecomment-100351564
       tcl
       tk
-      gitandgui
+      gitFull
       # other
       htop
       calibre
@@ -104,11 +101,11 @@ in
       gimp
       inkscape
       desktop-file-utils # has update-desktop-database https://github.com/tubleronchik/kuka-airapkgs/blob/d3bea431b0a092c67256f0c92e362f641182af8b/pkgs/tools/misc/mimeo/default.nix#L18
+      tig
       # development
       nodejs
       python
       robo3t
-      redis
       # nodejs development
       pkg-config # nix-env -q shows as pkg-config-wrapper
       glew
@@ -152,8 +149,6 @@ in
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = true;
-
-  nixpkgs.config.allowUnfree = true;
 
   # https://github.com/jordanisaacs/daysquare/blob/be8df7a44d79ed47da3730768b851cfd2a1c514f/flake.nix#L270
   services.mongodb = {
