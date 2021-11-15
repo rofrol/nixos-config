@@ -47,6 +47,9 @@
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
+  # disable wayland for now, as screensharing required pipewire
+  # and pipewire is probably too old in 21.05
+  services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
   
   # https://nixos.wiki/wiki/GNOME
@@ -63,6 +66,15 @@
   nixpkgs.config.firefox.enableGnomeExtensions = true;
   #nixpkgs.config.chrome.enableGnomeExtensions = true;
   services.gnome.chrome-gnome-shell.enable = true;
+
+  # https://github.com/nix-community/home-manager/issues/284#issuecomment-771119855
+  #dconf.settings."org/gnome/shell".disable-user-extensions = false;
+
+  #xdg.dataFile = listToAttrs (map ({ id, package }: {
+  #  name = "gnome-shell/extensions/${id}";
+  #  value = { source = package; };
+  #}) cfg.extensions);
+
 
   # Configure keymap in X11
   services.xserver.layout = "pl";
@@ -119,6 +131,7 @@
       tig
       tilix
       firefox
+      xorg.xeyes
       # development
       nodejs
       python
@@ -130,6 +143,8 @@
       xorg.libXi # nix-env -q shows as libXi
       zlib
       xorg.libX11 # nix-env -q shows libX11
+      imagemagick
+      optipng
   ];
 
   # https://nixos.wiki/wiki/Fonts
