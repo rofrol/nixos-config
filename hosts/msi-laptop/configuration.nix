@@ -49,6 +49,20 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   
+  # https://nixos.wiki/wiki/GNOME
+  programs.dconf.enable = true;
+  # Many applications rely heavily on having an icon theme available, GNOME’s Adwaita is a good choice but most recent icon themes should work as well.
+  #environment.systemPackages = [ gnome3.adwaita-icon-theme ];
+  #Systray Icons
+  #To get systray icons, install the related gnome shell extension
+  #environment.systemPackages = with pkgs; [ gnomeExtensions.appindicator ];
+  #And ensure gnome-settings-daemon udev rules are enabled :
+  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+
+  # https://unix.stackexchange.com/questions/437248/how-can-i-install-gnome-shell-extensions-from-extensions-gnome-org-through-firef
+  nixpkgs.config.firefox.enableGnomeExtensions = true;
+  #nixpkgs.config.chrome.enableGnomeExtensions = true;
+  services.gnome.chrome-gnome-shell.enable = true;
 
   # Configure keymap in X11
   services.xserver.layout = "pl";
@@ -96,12 +110,15 @@
       vscode
       efibootmgr
       gnome.gnome-tweaks # nix-env -q shows as gnome-tweaks
+      gnomeExtensions.appindicator
       mesa-demos
       powertop
       gimp
       inkscape
       desktop-file-utils # has update-desktop-database https://github.com/tubleronchik/kuka-airapkgs/blob/d3bea431b0a092c67256f0c92e362f641182af8b/pkgs/tools/misc/mimeo/default.nix#L18
       tig
+      tilix
+      firefox
       # development
       nodejs
       python
