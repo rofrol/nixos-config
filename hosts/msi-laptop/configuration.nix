@@ -51,6 +51,19 @@
   # and pipewire is probably too old in 21.05
   services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
+
+  # no login manager when enabled below any combination of drivers
+  # https://github.com/AleksanderGondek/nixos-config/blob/c0899f10642d6b481467e89237ba2a43aa3b0224/desktops/nvidia-desktop.nix#L8
+  #services.xserver.videoDrivers = [
+  #  "intel"
+  #  "nvidia"
+  #];
+
+  # https://nixos.wiki/wiki/Nvidia
+  #services.xserver.displayManager.gdm.wayland = true;
+  #services.xserver.displayManager.gdm.nvidiaWayland = true;
+  #hardware.nvidia.modesetting.enable = true;
+  #services.xserver.videoDrivers = [ "nvidia" ];
   
   # https://nixos.wiki/wiki/GNOME
   programs.dconf.enable = true;
