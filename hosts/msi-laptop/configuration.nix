@@ -4,6 +4,15 @@
 
 { config, pkgs, ... }:
 
+let
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec -a "$0" "$@"
+  '';
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -49,7 +58,7 @@
   services.xserver.displayManager.gdm.enable = true;
   # disable wayland for now, as screensharing required pipewire
   # and pipewire is probably too old in 21.05
-  services.xserver.displayManager.gdm.wayland = false;
+  #services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
 
   # no login manager when enabled below any combination of drivers
@@ -61,9 +70,19 @@
 
   # https://nixos.wiki/wiki/Nvidia
   #services.xserver.displayManager.gdm.wayland = true;
+  #services.xserver.displayManager.gdm.nvidiaWayland = false;
   #services.xserver.displayManager.gdm.nvidiaWayland = true;
   #hardware.nvidia.modesetting.enable = true;
   #services.xserver.videoDrivers = [ "nvidia" ];
+  #hardware.nvidia.prime = {
+  #  offload.enable = true;
+
+  #  # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+  #  intelBusId = "PCI:0:2:0";
+
+  #  # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+  #  nvidiaBusId = "PCI:1:0:0";
+  #};
   
   # https://nixos.wiki/wiki/GNOME
   programs.dconf.enable = true;
@@ -117,6 +136,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+      #nvidia-offload
       # tcl and tk needed for gitk
       # https://github.com/NixOS/nixpkgs/blob/nixos-21.05/pkgs/applications/version-management/git-and-tools/git/default.nix#L75
       # https://github.com/NixOS/nixpkgs/issues/7726#issuecomment-100351564
@@ -136,6 +156,7 @@
       efibootmgr
       gnome.gnome-tweaks # nix-env -q shows as gnome-tweaks
       gnomeExtensions.appindicator
+      #gnomeExtensions.dash-to-dock
       mesa-demos
       powertop
       gimp
@@ -145,6 +166,7 @@
       tilix
       firefox
       xorg.xeyes
+      ripgrep
       # development
       nodejs
       python
