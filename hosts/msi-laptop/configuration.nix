@@ -172,6 +172,7 @@ in
       dmidecode
       mc
       ncdu
+      nixpkgs-fmt
       # development
       nodejs
       python
