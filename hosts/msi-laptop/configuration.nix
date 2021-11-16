@@ -158,6 +158,7 @@ in
       gnomeExtensions.appindicator
       #gnomeExtensions.dash-to-dock
       mesa-demos
+      glmark2
       powertop
       gimp
       inkscape
@@ -167,6 +168,10 @@ in
       firefox
       xorg.xeyes
       ripgrep
+      gparted
+      dmidecode
+      mc
+      ncdu
       # development
       nodejs
       python
