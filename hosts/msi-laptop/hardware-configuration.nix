@@ -44,6 +44,12 @@
       fsType = "vfat";
     };
 
+  fileSystems."/media/debian" =
+    { device = "/dev/disk/by-label/debian";
+      fsType = "ext4";
+      options = [ "defaults" "x-gvfs-show" ];
+    };
+
   swapDevices = [ ];
 
   # $ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor

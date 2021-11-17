@@ -35,6 +35,9 @@ in
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
+  #
+  # should probably be in hardware-configuration.nix
+  # https://github.com/NixOS/nixpkgs/issues/146226
   networking.useDHCP = false;
   networking.interfaces.enp3s0.useDHCP = true;
   networking.interfaces.wlo1.useDHCP = true;
@@ -128,6 +131,7 @@ in
     extraGroups = [
       "wheel" # Enable ‘sudo’ for the user.
       "docker"
+      "networkmanager"
     ];
   };
 
@@ -173,6 +177,11 @@ in
       mc
       ncdu
       nixpkgs-fmt
+      jq
+      # https://discourse.nixos.org/t/nvd-simple-nix-nixos-version-diff-tool/12397/14
+      # https://discourse.nixos.org/t/import-list-in-configuration-nix-vs-import-function/11372/4
+      nvd
+      manix
       # development
       nodejs
       python
@@ -187,6 +196,28 @@ in
       imagemagick
       optipng
   ];
+
+  # /etc/nix/nix.conf is read-only
+  # https://unix.stackexchange.com/questions/544340/nixos-unable-to-modify-or-chmod-nix-config-etc-nix-nix-conf
+  # https://github.com/NixOS/nixpkgs/issues/80332#issuecomment-587540348
+  # https://nixos.org/manual/nix/unstable/command-ref/conf-file.html
+  #nix = {
+  #  #gc.automatic = false;
+  #  #optimise.automatic = true;
+  #  #readOnlyStore = true;
+  #  #useSandbox = true;
+  #  #package = pkgs.nixUnstable;
+  #  extraOptions = ''
+  #    experimental-features = nix-command
+  #  '';
+  #};
+
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
 
   # https://nixos.wiki/wiki/Fonts
   fonts.fonts = with pkgs; [
