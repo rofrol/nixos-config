@@ -47,7 +47,13 @@
   fileSystems."/media/debian" =
     { device = "/dev/disk/by-label/debian";
       fsType = "ext4";
-      options = [ "defaults" "x-gvfs-show" ];
+      options = [ "defaults" "noatime" "x-gvfs-show" ];
+    };
+
+  fileSystems."/media/Dane" =
+    { device = "/dev/disk/by-label/Dane";
+      fsType = "ntfs";
+      options = [ "defaults" "noatime" "x-gvfs-show" ];
     };
 
   swapDevices = [ ];

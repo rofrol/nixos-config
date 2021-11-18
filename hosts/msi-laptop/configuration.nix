@@ -178,6 +178,7 @@ in
       ncdu
       nixpkgs-fmt
       jq
+      sqlite
       # https://discourse.nixos.org/t/nvd-simple-nix-nixos-version-diff-tool/12397/14
       # https://discourse.nixos.org/t/import-list-in-configuration-nix-vs-import-function/11372/4
       nvd
@@ -195,6 +196,7 @@ in
       xorg.libX11 # nix-env -q shows libX11
       imagemagick
       optipng
+      gnumake
   ];
 
   # /etc/nix/nix.conf is read-only
