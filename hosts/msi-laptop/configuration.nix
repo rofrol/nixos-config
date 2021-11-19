@@ -179,6 +179,9 @@ in
       nixpkgs-fmt
       jq
       sqlite
+      pavucontrol
+      mpv
+      ffmpeg
       # https://discourse.nixos.org/t/nvd-simple-nix-nixos-version-diff-tool/12397/14
       # https://discourse.nixos.org/t/import-list-in-configuration-nix-vs-import-function/11372/4
       nvd
