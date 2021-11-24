@@ -12,6 +12,9 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec -a "$0" "$@"
   '';
+  # https://discourse.nixos.org/t/installing-only-a-single-package-from-unstable/5598
+  #unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  unstable = import <nixos-unstable> { config = config.nixpkgs.config; };
 in
 {
   imports =
@@ -152,10 +155,15 @@ in
       calibre
       docker
       file
-      google-chrome
+      #google-chrome
+      unstable.google-chrome
       transmission
       transmission-gtk
       neovim
+      # clipboard on linux needs xclip on xorg or wl-paste on wayland
+      # https://discourse.nixos.org/t/how-to-support-clipboard-for-neovim/9534/3
+      # or xsel https://github.com/neovim/neovim/issues/7945#issuecomment-361970165
+      xclip
       vscode
       efibootmgr
       gnome.gnome-tweaks # nix-env -q shows as gnome-tweaks
@@ -179,14 +187,19 @@ in
       nixpkgs-fmt
       jq
       sqlite
-      pavucontrol
-      mpv
-      ffmpeg
       # https://discourse.nixos.org/t/nvd-simple-nix-nixos-version-diff-tool/12397/14
       # https://discourse.nixos.org/t/import-list-in-configuration-nix-vs-import-function/11372/4
       nvd
       manix
+      pavucontrol
+      mpv
+      ffmpeg
+      audacity
+      nix-index
+      inxi
+      #
       # development
+      #
       nodejs
       python
       robo3t
