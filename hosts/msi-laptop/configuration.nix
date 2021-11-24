@@ -139,6 +139,11 @@ in
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  # https://discourse.nixos.org/t/neovim-checkhealth-problems/16233/4
+  systemd.tmpfiles.rules = [
+    "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash"
+  ];
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
