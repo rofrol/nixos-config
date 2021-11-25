@@ -15,6 +15,14 @@ let
   # https://discourse.nixos.org/t/installing-only-a-single-package-from-unstable/5598
   #unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   unstable = import <nixos-unstable> { config = config.nixpkgs.config; };
+
+  # https://nixos.wiki/wiki/Python
+  inherit (pkgs) python3;
+  my-python-packages = python-packages: with python-packages; [
+    pandas
+    requests
+  ];
+  python-with-my-packages = python3.withPackages my-python-packages;
 in
 {
   imports =
@@ -202,6 +210,9 @@ in
       audacity
       nix-index
       inxi
+      exiftool
+      python-with-my-packages
+      obs-studio
       #
       # development
       #
