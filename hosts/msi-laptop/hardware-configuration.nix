@@ -53,7 +53,10 @@
   fileSystems."/media/Dane" =
     { device = "/dev/disk/by-label/Dane";
       fsType = "ntfs";
-      options = [ "defaults" "noatime" "x-gvfs-show" ];
+      # options = [ "defaults" "noatime" "uid=1000" "gid=1000" "x-gvfs-show" ];
+      # https://sourcegraph.com/github.com/bbigras/nix-config/-/blob/hosts/desktop/default.nix?L129:7
+      # https://github.com/NixOS/nixpkgs/issues/55807#issuecomment-463987455
+      options = [ "uid=1000,gid=100,rw,user,exec,umask=000" ];
     };
 
   swapDevices = [ ];
