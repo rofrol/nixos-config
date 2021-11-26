@@ -151,6 +151,7 @@ in
   # https://discourse.nixos.org/t/neovim-checkhealth-problems/16233/4
   systemd.tmpfiles.rules = [
     "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash"
+    "L+ /lib64/ld-linux-x86-64.so.2 - - - - ${pkgs.stdenv.glibc}/lib64/ld-linux-x86-64.so.2"
   ];
   
   # List packages installed in system profile. To search, run:
@@ -213,10 +214,11 @@ in
       exiftool
       python-with-my-packages
       obs-studio
+      fd
       #
       # development
       #
-      nodejs
+      nodejs-16_x
       python
       robo3t
       # nodejs development
