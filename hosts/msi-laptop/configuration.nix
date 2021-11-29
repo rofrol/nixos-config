@@ -145,9 +145,12 @@ in
   # $ gsettings reset org.gnome.desktop.input-sources sources
   # and the system defaults should be picked up after re-login.
   # https://discourse.nixos.org/t/problem-with-xkboptions-it-doesnt-seem-to-take-effect/5269/2
+  # https://discourse.nixos.org/t/configuring-caps-lock-as-control-on-console/9356
+  # I do this with services.udev.extraHwdb
+  # interception-tools.enable = true;
+  # In my NixOS configuration to get Capslock as Control + Escape verywhere.
  
   # https://www.reddit.com/r/NixOS/comments/r4swzy/comment/hmj4gxq/
-  # https://sourcegraph.com/github.com/nitsky/config/-/blob/machines/babybeluga.nix?L98
   environment.etc."dual-function-keys.yaml".text = ''
     MAPPINGS:
       - KEY: KEY_CAPSLOCK
