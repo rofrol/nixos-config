@@ -125,6 +125,42 @@ in
   # Configure keymap in X11
   services.xserver.layout = "pl";
   # services.xserver.xkbOptions = "eurosign:e";
+  # https://unix.stackexchange.com/questions/377600/in-nixos-how-to-remap-caps-lock-to-control/639163#639163
+  # TODO: Make it working in wayland also?
+  #services.xserver.xkbOptions = "caps:escape";
+  #console.useXkbConfig = true;
+
+  # # needed when using xkbOptions or interception-tools
+  # https://gitlab.com/interception/linux/plugins/dual-function-keys#my-key-combination-isnt-working
+  #
+  # $ gsettings get org.gnome.desktop.input-sources xkb-options
+  # ['terminate:ctrl_alt_bksp', 'lv3:ralt_switch']
+  # $ gsettings get org.gnome.desktop.input-sources sources
+  # [('xkb', 'pl')]
+  # # Need to reset for gnome to pickup changes from configuration.nix
+  # $ gsettings reset org.gnome.desktop.input-sources xkb-options
+  # $ gsettings reset org.gnome.desktop.input-sources sources
+ 
+  # https://www.reddit.com/r/NixOS/comments/r4swzy/comment/hmj4gxq/
+  # https://sourcegraph.com/github.com/nitsky/config/-/blob/machines/babybeluga.nix?L98
+  environment.etc."dual-function-keys.yaml".text = ''
+    MAPPINGS:
+      - KEY: KEY_CAPSLOCK
+        TAP: KEY_ESC
+        HOLD: KEY_LEFTCTRL
+  '';
+  services.interception-tools = {
+    enable = true;
+    plugins = [ pkgs.interception-tools-plugins.dual-function-keys ];
+    udevmonConfig = ''
+      - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.dual-function-keys}/bin/dual-function-keys -c /etc/dual-function-keys.yaml | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
+        DEVICE:
+          EVENTS:
+            EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
+    '';
+  };
+
+
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -135,38 +171,6 @@ in
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-  # https://www.reddit.com/r/NixOS/comments/r4swzy/comment/hmj4gxq/
-  # https://sourcegraph.com/github.com/nitsky/config/-/blob/machines/babybeluga.nix?L98
-  #environment.etc."dual-function-keys.yaml".text = ''
-  #  MAPPINGS:
-  #    - KEY: KEY_CAPSLOCK
-  #      TAP: KEY_ESC
-  #      HOLD: KEY_LEFTCTRL
-  #'';
-  #services.interception-tools = {
-  #  enable = true;
-  #  plugins = [ pkgs.interception-tools-plugins.dual-function-keys ];
-  #  udevmonConfig = ''
-  #    - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.dual-function-keys}/bin/dual-function-keys -c /etc/dual-function-keys.yaml | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
-  #      DEVICE:
-  #        EVENTS:
-  #          EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
-  #  '';
-  #};
-
-  # https://unix.stackexchange.com/questions/377600/in-nixos-how-to-remap-caps-lock-to-control/639163#639163
-  services.xserver.layout = "pl";
-  # TODO: Make it working in wayland also?
-  services.xserver.xkbOptions = "caps:escape";
-  console.useXkbConfig = true;
-  # $ gsettings get org.gnome.desktop.input-sources xkb-options
-  # ['terminate:ctrl_alt_bksp', 'lv3:ralt_switch']
-  # $ gsettings get org.gnome.desktop.input-sources sources
-  # [('xkb', 'pl')]
-  # # Need to reset for gnome to pickup changes from configuration.nix
-  # $ gsettings reset org.gnome.desktop.input-sources xkb-options
-  # $ gsettings reset org.gnome.desktop.input-sources sources
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.roman = {
