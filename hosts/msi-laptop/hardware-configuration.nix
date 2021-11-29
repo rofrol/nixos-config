@@ -38,6 +38,7 @@
   hardware = {
     enableAllFirmware = true;
     enableRedistributableFirmware = true;
+    # ls $(cat /sys/module/firmware_class/parameters/path) | grep regulatory.db
     # NOTE: When 21.11 lands, swap for:
     # wirelessRegulatoryDatabase = true;
     firmware = [ pkgs.wireless-regdb ];
