@@ -59,6 +59,7 @@ in
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "pl_PL.UTF-8";
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
@@ -140,6 +141,7 @@ in
   # # Need to reset for gnome to pickup changes from configuration.nix
   # $ gsettings reset org.gnome.desktop.input-sources xkb-options
   # $ gsettings reset org.gnome.desktop.input-sources sources
+  # # restart may be needed after above commands for gnome to pickup changes
  
   # https://www.reddit.com/r/NixOS/comments/r4swzy/comment/hmj4gxq/
   # https://sourcegraph.com/github.com/nitsky/config/-/blob/machines/babybeluga.nix?L98
