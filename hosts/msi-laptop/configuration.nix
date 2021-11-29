@@ -153,6 +153,23 @@ in
     "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash"
     "L+ /lib64/ld-linux-x86-64.so.2 - - - - ${pkgs.stdenv.glibc}/lib64/ld-linux-x86-64.so.2"
   ];
+
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
+  # https://www.reddit.com/r/NixOS/comments/r0o829/comment/hlv6hoj/
+  # https://discourse.nixos.org/t/nvd-simple-nix-nixos-version-diff-tool/12397/19
+  # https://sourcegraph.com/github.com/vic/mk-darwin-system/-/blob/default.nix?L60
+  #${nix}/bin/nix profile diff-closures --profile /run/current-system "$systemConfig"
+  system.activationScripts.diff = ''
+    ${pkgs.nixUnstable}/bin/nix store \
+        --experimental-features 'nix-command' \
+        diff-closures /run/current-system "$systemConfig"
+  '';
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -215,6 +232,7 @@ in
       python-with-my-packages
       obs-studio
       fd
+      hwinfo
       #
       # development
       #
@@ -247,13 +265,6 @@ in
   #    experimental-features = nix-command
   #  '';
   #};
-
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
 
   # https://nixos.wiki/wiki/Fonts
   fonts.fonts = with pkgs; [
