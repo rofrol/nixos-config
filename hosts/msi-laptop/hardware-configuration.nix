@@ -34,6 +34,17 @@
   #  };
   #};
 
+  # https://sourcegraph.com/github.com/jkachmar/dotnix/-/blob/hosts/kraftwerk/hardware.nix?L133:7
+  hardware = {
+    enableAllFirmware = true;
+    enableRedistributableFirmware = true;
+    # NOTE: When 21.11 lands, swap for:
+    # wirelessRegulatoryDatabase = true;
+    firmware = [ pkgs.wireless-regdb ];
+
+    cpu.intel.updateMicrocode = true;
+  };
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/a86a408b-2039-4002-bb13-ae15ae3d6d1a";
       fsType = "ext4";

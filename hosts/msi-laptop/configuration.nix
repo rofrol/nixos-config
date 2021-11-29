@@ -152,7 +152,18 @@ in
   systemd.tmpfiles.rules = [
     "L+ /bin/bash - - - - ${pkgs.bash}/bin/bash"
     "L+ /lib64/ld-linux-x86-64.so.2 - - - - ${pkgs.stdenv.glibc}/lib64/ld-linux-x86-64.so.2"
+    "L+ /lib/firmware/regulatory.db - - - - ${pkgs.wireless-regdb}/lib/firmware/regulatory.db"
+    "L+ /lib/firmware/regulatory.db.p7s - - - - ${pkgs.wireless-regdb}/lib/firmware/regulatory.db.p7s"
   ];
+
+  # https://nixos.wiki/wiki/NixOS:extend_NixOS
+  # https://www.reddit.com/r/NixOS/comments/cg102t/comment/eudvtz1/
+  systemd.services.iw-reg-set = {
+    serviceConfig = {
+      ExecStart = "${pkgs.iw}/bin/iw reg set PL";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
 
   nix = {
     package = pkgs.nixFlakes;
@@ -233,6 +244,7 @@ in
       obs-studio
       fd
       hwinfo
+      iw
       #
       # development
       #
