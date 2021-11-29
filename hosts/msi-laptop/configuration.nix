@@ -138,10 +138,13 @@ in
   # ['terminate:ctrl_alt_bksp', 'lv3:ralt_switch']
   # $ gsettings get org.gnome.desktop.input-sources sources
   # [('xkb', 'pl')]
-  # # Need to reset for gnome to pickup changes from configuration.nix
+
+  # regular GNOME uses gnome-settings-daemon to manage keyboard configuration. And its keyboard manager uses GSettings to store the keyboard configuration, only using the xkb config for initial set up:
+  # You can clean up the settings using
   # $ gsettings reset org.gnome.desktop.input-sources xkb-options
   # $ gsettings reset org.gnome.desktop.input-sources sources
-  # # restart may be needed after above commands for gnome to pickup changes
+  # and the system defaults should be picked up after re-login.
+  # https://discourse.nixos.org/t/problem-with-xkboptions-it-doesnt-seem-to-take-effect/5269/2
  
   # https://www.reddit.com/r/NixOS/comments/r4swzy/comment/hmj4gxq/
   # https://sourcegraph.com/github.com/nitsky/config/-/blob/machines/babybeluga.nix?L98
