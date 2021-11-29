@@ -136,6 +136,17 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # https://www.reddit.com/r/NixOS/comments/r4swzy/comment/hmj4gxq/?utm_source=reddit&utm_medium=web2x&context=3
+  services.interception-tools = {
+    enable = true;
+    udevmonConfig = ''
+      - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.caps2esc}/bin/caps2esc | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
+        DEVICE:
+        EVENTS:
+           EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
+    '';
+   };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.roman = {
     isNormalUser = true;
