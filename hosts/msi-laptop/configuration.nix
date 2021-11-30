@@ -164,7 +164,7 @@ in
       - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.dual-function-keys}/bin/dual-function-keys -c /etc/dual-function-keys.yaml | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
         DEVICE:
           EVENTS:
-            EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
+            EV_KEY: [KEY_CAPSLOCK]
     '';
   };
 
@@ -208,6 +208,8 @@ in
     };
     wantedBy = [ "multi-user.target" ];
   };
+
+  services.geoclue2.enable = true;
 
   nix = {
     package = pkgs.nixFlakes;
@@ -266,7 +268,7 @@ in
       firefox
       xorg.xeyes
       ripgrep
-      gparted
+      unstable.gparted
       dmidecode
       mc
       ncdu
@@ -289,6 +291,7 @@ in
       fd
       hwinfo
       iw
+      (geoclue2.override { withDemoAgent = true; })
       #
       # development
       #
