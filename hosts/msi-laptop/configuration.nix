@@ -334,6 +334,10 @@ in
       gnumake
   ];
 
+  xdg.mime.defaultApplications = {
+    "application/pdf" = "evince.desktop";
+  };
+
   # https://nixos.wiki/wiki/Fonts
   fonts.fonts = with pkgs; [
     ubuntu_font_family # nix-env -q shows as ubuntu-font-family
