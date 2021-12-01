@@ -58,8 +58,14 @@ in
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  i18n.defaultLocale = "pl_PL.UTF-8";
+  # https://sourcegraph.com/github.com/NixOS/nixpkgs/-/blob/nixos/modules/config/i18n.nix?L40:21
+  # https://sourcegraph.com/github.com/M-Gregoire/infrastructure/-/blob/nixos/common.nix?L87:29
+  # https://sourcegraph.com/github.com/magnetophon/nixosConfig/-/blob/common.nix?L889
+  i18n = {
+    defaultLocale = "pl_PL.UTF-8";
+    extraLocaleSettings = { LC_MESSAGES = "en_US.UTF-8"; LC_TIME = "pl_PL.UTF-8"; };
+    supportedLocales = [ "en_US.UTF-8/UTF-8" "pl_PL.UTF-8/UTF-8" ];
+  };
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
