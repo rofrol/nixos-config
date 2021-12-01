@@ -253,6 +253,8 @@ in
       tk
       gitFull
       # other
+      tig
+      git-trim
       htop
       calibre
       docker
@@ -275,7 +277,6 @@ in
       gimp
       inkscape
       desktop-file-utils # has update-desktop-database https://github.com/tubleronchik/kuka-airapkgs/blob/d3bea431b0a092c67256f0c92e362f641182af8b/pkgs/tools/misc/mimeo/default.nix#L18
-      tig
       tilix
       firefox
       xorg.xeyes
@@ -304,6 +305,9 @@ in
       (geoclue2.override { withDemoAgent = true; })
       lsb-release
       yt-dlp
+      # speedtest -L
+      # speedtest -s 4166
+      ookla-speedtest
       #
       # hardware information
       #
