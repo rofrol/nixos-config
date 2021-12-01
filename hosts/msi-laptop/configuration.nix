@@ -308,6 +308,7 @@ in
       # speedtest -L
       # speedtest -s 4166
       ookla-speedtest
+      libreoffice-fresh
       #
       # hardware information
       #
