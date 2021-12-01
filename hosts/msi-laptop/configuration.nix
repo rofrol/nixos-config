@@ -79,7 +79,7 @@ in
   services.xserver.displayManager.gdm.enable = true;
   # disable wayland for now, as screensharing required pipewire
   # and pipewire is probably too old in 21.05
-  #services.xserver.displayManager.gdm.wayland = false;
+  services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
 
   # no login manager when enabled below any combination of drivers
@@ -269,8 +269,6 @@ in
       vscode
       efibootmgr
       gnome.gnome-tweaks # nix-env -q shows as gnome-tweaks
-      gnomeExtensions.appindicator
-      #gnomeExtensions.dash-to-dock
       mesa-demos
       glmark2
       powertop
@@ -307,6 +305,7 @@ in
       iw
       (geoclue2.override { withDemoAgent = true; })
       lsb-release
+      yt-dlp
       #
       # development
       #
