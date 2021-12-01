@@ -217,11 +217,19 @@ in
 
   services.geoclue2.enable = true;
 
+  # /etc/nix/nix.conf is read-only
+  # https://unix.stackexchange.com/questions/544340/nixos-unable-to-modify-or-chmod-nix-config-etc-nix-nix-conf
+  # https://github.com/NixOS/nixpkgs/issues/80332#issuecomment-587540348
+  # https://nixos.org/manual/nix/unstable/command-ref/conf-file.html
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nix_2_4;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    #gc.automatic = false;
+    #optimise.automatic = true;
+    #readOnlyStore = true;
+    #useSandbox = true;
   };
 
   # https://www.reddit.com/r/NixOS/comments/r0o829/comment/hlv6hoj/
@@ -274,7 +282,7 @@ in
       firefox
       xorg.xeyes
       ripgrep
-      unstable.gparted
+      gparted
       dmidecode
       mc
       ncdu
@@ -316,21 +324,6 @@ in
       optipng
       gnumake
   ];
-
-  # /etc/nix/nix.conf is read-only
-  # https://unix.stackexchange.com/questions/544340/nixos-unable-to-modify-or-chmod-nix-config-etc-nix-nix-conf
-  # https://github.com/NixOS/nixpkgs/issues/80332#issuecomment-587540348
-  # https://nixos.org/manual/nix/unstable/command-ref/conf-file.html
-  #nix = {
-  #  #gc.automatic = false;
-  #  #optimise.automatic = true;
-  #  #readOnlyStore = true;
-  #  #useSandbox = true;
-  #  #package = pkgs.nixUnstable;
-  #  extraOptions = ''
-  #    experimental-features = nix-command
-  #  '';
-  #};
 
   # https://nixos.wiki/wiki/Fonts
   fonts.fonts = with pkgs; [
