@@ -296,16 +296,22 @@ in
       ffmpeg
       audacity
       nix-index
-      inxi
       exiftool
       python-with-my-packages
       obs-studio
       fd
-      hwinfo
       iw
       (geoclue2.override { withDemoAgent = true; })
       lsb-release
       yt-dlp
+      #
+      # hardware information
+      #
+      inxi
+      hwinfo
+      # sudo lshw -short
+      # sudo lshw -C storage
+      lshw
       #
       # development
       #
