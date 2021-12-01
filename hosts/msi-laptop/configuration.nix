@@ -292,6 +292,7 @@ in
       hwinfo
       iw
       (geoclue2.override { withDemoAgent = true; })
+      lsb-release
       #
       # development
       #
