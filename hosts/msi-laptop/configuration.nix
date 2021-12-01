@@ -333,6 +333,7 @@ in
       imagemagick
       optipng
       gnumake
+      libuuid # libuuid is in util-linux, required for node-canvas or sth
   ];
 
   xdg.mime.defaultApplications = {
