@@ -195,6 +195,8 @@ in
       "networkmanager"
     ];
   };
+  # https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-21.11
+  users.groups.users = {};
 
   nixpkgs.config.allowUnfree = true;
 
