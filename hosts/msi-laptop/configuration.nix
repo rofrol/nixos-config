@@ -19,8 +19,12 @@ let
   # https://nixos.wiki/wiki/Python
   inherit (pkgs) python3;
   my-python-packages = python-packages: with python-packages; [
+    pip # is it needed?
     pandas
     requests
+    beautifulsoup4
+    #sqlite3 # looks like python3 in nixos has sqlite support already
+    autopep8
   ];
   python-with-my-packages = python3.withPackages my-python-packages;
 in
@@ -289,7 +293,7 @@ in
       ncdu
       nixpkgs-fmt
       jq
-      sqlite
+      sqlite-interactive # readline works in this variant
       # https://discourse.nixos.org/t/nvd-simple-nix-nixos-version-diff-tool/12397/14
       # https://discourse.nixos.org/t/import-list-in-configuration-nix-vs-import-function/11372/4
       nvd
