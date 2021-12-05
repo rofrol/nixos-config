@@ -307,6 +307,7 @@ in
       (geoclue2.override { withDemoAgent = true; })
       lsb-release
       yt-dlp
+      tokei
       # speedtest -L
       # speedtest -s 4166
       ookla-speedtest
@@ -323,7 +324,6 @@ in
       # development
       #
       nodejs-16_x
-      python
       robo3t
       # nodejs development
       pkg-config # nix-env -q shows as pkg-config-wrapper
