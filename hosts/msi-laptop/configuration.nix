@@ -316,6 +316,8 @@ in
       # speedtest -s 4166
       ookla-speedtest
       libreoffice-fresh
+      tree
+      csvkit
       #
       # hardware information
       #
@@ -386,7 +388,13 @@ in
     package = pkgs.mongodb-4_2;
     #bind_ip = "0.0.0.0";
     enable = true;
+    extraConfig = ''
+      operationProfiling.mode: all
+      #systemLog.quiet: false
+    '';
   };
   services.redis.enable = true;
+
+  services.fstrim.enable = true;
 }
 
