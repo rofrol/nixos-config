@@ -73,8 +73,10 @@
 
   swapDevices = [ ];
 
+  # TODO: https://discourse.nixos.org/t/cpu-governor-powersave-no-effect/7973/3
   # $ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
   # $ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors 
   # https://askubuntu.com/questions/604720/setting-to-high-performance/1047763#1047763
-  powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+  #powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
