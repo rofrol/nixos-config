@@ -197,6 +197,7 @@ in
       "wheel" # Enable ‘sudo’ for the user.
       "docker"
       "networkmanager"
+      "wireshark"
     ];
   };
   # https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-21.11
@@ -269,7 +270,7 @@ in
       unstable.google-chrome
       transmission
       transmission-gtk
-      neovim
+      unstable.neovim
       # clipboard on linux needs xclip on xorg or wl-paste on wayland
       # https://discourse.nixos.org/t/how-to-support-clipboard-for-neovim/9534/3
       # or xsel https://github.com/neovim/neovim/issues/7945#issuecomment-361970165
@@ -318,6 +319,11 @@ in
       libreoffice-fresh
       tree
       csvkit
+      #bintools
+      #bintools-unwrapped
+      p7zip
+      workrave
+      mono
       #
       # hardware information
       #
@@ -360,6 +366,16 @@ in
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  # https://nixos.wiki/wiki/Steam
+  programs.steam.enable = true;
+
+  # https://www.reddit.com/r/NixOS/comments/n4b3tl/i_cant_initiate_capture_session_on_wlp3s0_says_i/
+  # https://github.com/search?q=%22programs.wireshark.enable%22&type=code
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
 
   # List services that you want to enable:
 
